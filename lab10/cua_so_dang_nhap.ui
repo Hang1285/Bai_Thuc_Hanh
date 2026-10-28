@@ -1,0 +1,64 @@
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QMessageBox
+
+class CuaSoDangNhap(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Đăng Nhập Hệ Thống")
+        self.resize(400, 250)
+
+        # Tạo widget trung tâm và layout chính
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+        layout_chinh = QVBoxLayout(central_widget)
+
+        # Tiêu đề form
+        lbl_tieu_de = QLabel("ĐĂNG NHẬP")
+        lbl_tieu_de.setStyleSheet("font-size: 18px; font-weight: bold; color: #333;")
+        layout_chinh.addWidget(lbl_tieu_de)
+
+        # Ô nhập Tên đăng nhập
+        layout_user = QHBoxLayout()
+        lbl_user = QLabel("Tài khoản:")
+        lbl_user.setFixedWidth(80)
+        self.txt_user = QLineEdit()
+        self.txt_user.setPlaceholderText("Nhập tên đăng nhập...")
+        layout_user.addWidget(lbl_user)
+        layout_user.addWidget(self.txt_user)
+        layout_chinh.addLayout(layout_user)
+
+        # Ô nhập Mật khẩu
+        layout_pass = QHBoxLayout()
+        lbl_pass = QLabel("Mật khẩu:")
+        lbl_pass.setFixedWidth(80)
+        self.txt_pass = QLineEdit()
+        self.txt_pass.setEchoMode(QLineEdit.Password)
+        self.txt_pass.setPlaceholderText("Nhập mật khẩu...")
+        layout_pass.addWidget(lbl_pass)
+        layout_pass.addWidget(self.txt_pass)
+        layout_chinh.addLayout(layout_pass)
+
+        # Nút Đăng nhập
+        self.btn_dang_nhap = QPushButton("Đăng Nhập")
+        self.btn_dang_nhap.setStyleSheet("background-color: #007ACC; color: white; font-weight: bold; padding: 8px;")
+        self.btn_dang_nhap.clicked.connect(self.xu_ly_dang_nhap)
+        layout_chinh.addWidget(self.btn_dang_nhap)
+
+        # Thêm khoảng trống đẩy các thành phần lên trên
+        layout_chinh.addStretch()
+
+    def xu_ly_dang_nhap(self):
+        ten_dang_nhap = self.txt_user.text()
+        mat_khau = self.txt_pass.text()
+
+        # Kiểm tra mẫu đơn giản
+        if ten_dang_nhap == "admin" and mat_khau == "123456":
+            QMessageBox.information(self, "Thành công", "Đăng nhập thành công!")
+        else:
+            QMessageBox.warning(self, "Lỗi", "Sai tên đăng nhập hoặc mật khẩu!")
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    cua_so = CuaSoDangNhap()
+    cua_so.show()
+    sys.exit(app.exec_())
